@@ -9,22 +9,25 @@ const scoreText = document.getElementById("score");
 const nextButton = document.getElementById("next-button");
 const finishButton = document.getElementById("finish-button");
 const questionNumber = document.getElementById("question-number");
-
-
+const error = document.getElementById("error");
 
 const CORRECT_BONUS = 10;
-const URL =
-  `https://opentdb.com/api.php?amount=10&difficulty=${level}&type=multiple`;
+const URL = `https://opentdb.com/api.php?amount=10&difficulty=${level}&type=multiple`;
 let formattedData = null;
 let questionIndex = 0;
 let correctAnswer = null;
 let score = 0;
 let isAccepted = true;
 const fetchData = async () => {
-  const res = await fetch(URL);
-  const json = await res.json();
-  formattedData = formatData(json.results);
-  start();
+  try {
+    const res = await fetch(URL);
+    const json = await res.json();
+    formattedData = formatData(json.results);
+    start();
+  } catch (err) {
+    loader.style.display = "none";
+    error.style.display = "block";
+  }
 };
 
 const start = () => {
@@ -65,7 +68,7 @@ const nextHandler = () => {
     removeClasses();
     showQuestion();
   } else {
-   finishHandler()
+    finishHandler();
   }
 };
 const removeClasses = () => {

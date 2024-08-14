@@ -112,3 +112,7 @@ h3{
 .incorrect:hover {
     background-color: #fe6681;
 }
+
+#error{
+    display: none;
+}
